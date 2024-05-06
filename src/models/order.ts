@@ -1,23 +1,14 @@
 import { Schema, model, type Document } from 'mongoose';
 import validator from 'validator';
-import { zipCodeList } from '@/utils/zipcodes';
 
 export interface IOrder extends Document {
     roomId: Schema.Types.ObjectId;
-    checkInDate: Date;
-    checkOutDate: Date;
+    days: string[];
     peopleNum: number;
-    orderUserId: Schema.Types.ObjectId;
     userInfo: {
         name: string;
         phone: string;
-        email: string;
-        address: {
-            zipcode: number;
-            detail: string;
-        };
     };
-    status: number;
 }
 
 const orderSchema = new Schema<IOrder>(
@@ -27,13 +18,9 @@ const orderSchema = new Schema<IOrder>(
             ref: 'room',
             required: [true, 'roomId 未填寫']
         },
-        checkInDate: {
-            type: Date,
-            required: [true, 'checkInDate 未填寫']
-        },
-        checkOutDate: {
-            type: Date,
-            required: [true, 'checkOutDate 未填寫']
+        days: {
+            type: [String],
+            required: [true, 'days 未填寫']
         },
         peopleNum: {
             type: Number,
@@ -45,56 +32,18 @@ const orderSchema = new Schema<IOrder>(
                 message: 'peopleNum 格式不正確'
             }
         },
-        orderUserId: {
-            type: Schema.Types.ObjectId,
-            ref: 'user',
-            required: [true, 'orderUserId 未填寫']
-        },
         userInfo: {
-            name: {
-                type: String,
-                required: [true, 'name 未填寫'],
-                validate: {
-                    validator(value: string) {
-                        return validator.isLength(value, { min: 2 });
-                    },
-                    message: 'name 至少 2 個字元以上'
-                }
-            },
-            phone: {
-                type: String,
-                required: [true, 'phone 未填寫']
-            },
-            email: {
-                type: String,
-                required: [true, 'email 未填寫'],
-                validate: {
-                    validator(value: string) {
-                        return validator.isEmail(value);
-                    },
-                    message: 'email 格式不正確'
-                }
-            },
-            address: {
-                zipcode: {
-                    type: Number,
-                    required: [true, 'zipcode 未填寫'],
-                    validate: {
-                        validator(value: number) {
-                            return zipCodeList.includes(value);
-                        },
-                        message: 'zipcode 錯誤'
-                    }
-                },
-                detail: {
+            type: {
+                name: {
                     type: String,
-                    required: [true, 'detail 未填寫']
+                    required: [true, 'name 未填寫']
+                },
+                phone: {
+                    type: String,
+                    required: [true, 'phone 未填寫']
                 }
-            }
-        },
-        status: {
-            type: Number,
-            default: 0
+            },
+            required: [true, 'userInfo 未填寫']
         }
     },
     {

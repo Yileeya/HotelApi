@@ -1,6 +1,7 @@
 import type { RequestHandler } from 'express';
 import createHttpError from 'http-errors';
 import RoomModel from '@/models/room';
+import OrderModel from '@/models/order'
 
 export const getRoomList: RequestHandler = async (_req, res, next) => {
     try {
@@ -34,9 +35,31 @@ export const getRoomById: RequestHandler = async (req, res, next) => {
             throw createHttpError(404, '此房型不存在');
         }
 
+        // 查詢與該房間相關的所有訂單
+        const orders = await OrderModel.find({ roomId: req.params.id });
+
+        // 獲取所有訂單中的預訂日期
+        const bookedDays: string[] = orders.reduce<string[]>((acc, order) => {
+            acc.push(...order.days);
+            return acc;
+        }, []);
+
+        // 篩選出從今天開始的 90 天內的預訂日期
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // 將時間設置為午夜
+
+        const futureDates = bookedDays.filter(date => {
+            const bookingDate = new Date(date);
+            return bookingDate >= today && bookingDate <= new Date(today.getTime() + 90 * 24 * 60 * 60 * 1000);
+        });
+
+        // 移除重複的日期
+        const uniqueBookedDays = [...new Set(futureDates)];
+
         res.send({
             status: true,
-            result
+            result,
+            bookedDays: uniqueBookedDays
         });
     } catch (error) {
         next(error);
