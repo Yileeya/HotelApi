@@ -5,17 +5,14 @@ import itemSchema, { IItem } from './schema/item';
 export interface IRoom extends Document {
     name: string;
     description: string;
-    imageUrl: string;
     imageUrlList: string[];
-    areaInfo: string;
+    areaInfo: Number;
     bedInfo: string;
     maxPeople: number;
     price: number;
     // 可使用：1，已刪除：-1
     status: number;
-    layoutInfo: IItem[];
     facilityInfo: IItem[];
-    amenityInfo: IItem[];
 }
 
 const roomSchema = new Schema<IRoom>(
@@ -27,16 +24,6 @@ const roomSchema = new Schema<IRoom>(
         description: {
             type: String,
             required: [true, 'description 未填寫']
-        },
-        imageUrl: {
-            type: String,
-            required: [true, 'imageUrl 未填寫'],
-            validate: {
-                validator(value: string) {
-                    return validator.isURL(value, { protocols: ['https'] });
-                },
-                message: 'imageUrl 格式不正確'
-            }
         },
         imageUrlList: [
             {
@@ -51,7 +38,7 @@ const roomSchema = new Schema<IRoom>(
             }
         ],
         areaInfo: {
-            type: String,
+            type: Number,
             required: [true, 'areaInfo 未填寫']
         },
         bedInfo: {
@@ -76,15 +63,7 @@ const roomSchema = new Schema<IRoom>(
             type: Number,
             default: 1
         },
-        layoutInfo: {
-            type: [itemSchema],
-            default: []
-        },
         facilityInfo: {
-            type: [itemSchema],
-            default: []
-        },
-        amenityInfo: {
             type: [itemSchema],
             default: []
         }

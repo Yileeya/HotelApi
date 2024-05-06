@@ -4,10 +4,17 @@ import RoomModel from '@/models/room';
 
 export const getRoomList: RequestHandler = async (_req, res, next) => {
     try {
-        const result = await RoomModel.find({
-            status: 1
-        });
-
+        const result = await RoomModel.find({ status: 1 })
+            .select('_id name imageUrlList')
+            .then(rooms => {
+                return rooms.map(room => {
+                    return {
+                        _id: room._id,
+                        name: room.name,
+                        imageUrl: room.imageUrlList.length > 0 ? room.imageUrlList[0] : ''
+                    };
+                });
+            });
         res.send({
             status: true,
             result
