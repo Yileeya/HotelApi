@@ -3,6 +3,7 @@ import createHttpError from 'http-errors';
 import validator from 'validator';
 import RoomModel from '@/models/room';
 import UsersModel from '@/models/user';
+import OrderModel from '@/models/order';
 import { verifyToken } from '@/utils';
 
 // token 驗證
@@ -102,7 +103,10 @@ export const checkRequestBodyValidator: RequestHandler = (req, _res, next) => {
 
 export const checkOrder: RequestHandler = async (req, _res, next) => {
     try {
-        const { roomId, checkInDate, checkOutDate, peopleNum } = req.body;
+        const { roomId, days, peopleNum } = req.body;
+
+        const isPassValidateDates = validateDatesFormat(days);
+        if (!isPassValidateDates) throw new Error('日期格式 錯誤');
 
         const roomInfo = await RoomModel.findOne({
             _id: roomId,
@@ -117,16 +121,18 @@ export const checkOrder: RequestHandler = async (req, _res, next) => {
             throw new Error('peopleNum 錯誤');
         }
 
-        if (!validator.isDate(checkInDate)) {
-            throw new Error('checkInDate 格式錯誤');
-        }
 
-        if (!validator.isDate(checkOutDate)) {
-            throw new Error('checkOutDate 格式錯誤');
-        }
-
-        if (new Date(checkInDate) > new Date(checkOutDate)) {
-            throw new Error('checkInDate 錯誤');
+        // 檢查日期是否已被預約
+        const overlappingOrders = await OrderModel.find({
+            roomId: roomId,
+            days: {
+                $elemMatch: {
+                    $in: days
+                }
+            }
+        });
+        if (overlappingOrders.length) {
+            throw new Error('日期已被預訂');
         }
 
         next();
@@ -134,3 +140,7 @@ export const checkOrder: RequestHandler = async (req, _res, next) => {
         next(error);
     }
 };
+
+function validateDatesFormat(days: string[]): boolean {
+    return days.every(dateString => !isNaN(Date.parse(dateString)));
+}

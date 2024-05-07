@@ -54,15 +54,13 @@ export const getOrderById: RequestHandler = async (req, res, next) => {
 
 export const createOneOrder: RequestHandler = async (req, res, next) => {
     try {
-        const { roomId, checkInDate, checkOutDate, peopleNum, userInfo } = req.body;
+        const { roomId, peopleNum, userInfo, days } = req.body;
 
         const result = await OrderModel.create({
             roomId,
-            orderUserId: req.user?._id,
-            checkInDate,
-            checkOutDate,
             peopleNum,
-            userInfo
+            userInfo,
+            days
         });
 
         await result.populate({
@@ -71,7 +69,7 @@ export const createOneOrder: RequestHandler = async (req, res, next) => {
 
         res.send({
             status: true,
-            result
+            result: '成功'
         });
     } catch (error) {
         next(error);

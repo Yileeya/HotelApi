@@ -33,7 +33,7 @@ const orderSchema = new Schema<IOrder>(
             }
         },
         userInfo: {
-            type: {
+            type: new Schema({
                 name: {
                     type: String,
                     required: [true, 'name 未填寫']
@@ -42,7 +42,7 @@ const orderSchema = new Schema<IOrder>(
                     type: String,
                     required: [true, 'phone 未填寫']
                 }
-            },
+            }, { _id: false }),
             required: [true, 'userInfo 未填寫']
         }
     },
