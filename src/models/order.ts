@@ -8,6 +8,7 @@ export interface IOrder extends Document {
     userInfo: {
         name: string;
         phone: string;
+        email: string;
     };
 }
 
@@ -41,6 +42,10 @@ const orderSchema = new Schema<IOrder>(
                 phone: {
                     type: String,
                     required: [true, 'phone 未填寫']
+                },
+                email: {
+                    type: String,
+                    required: [true, 'email 未填寫']
                 }
             }, { _id: false }),
             required: [true, 'userInfo 未填寫']
