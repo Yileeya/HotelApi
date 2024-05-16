@@ -13,6 +13,10 @@ export interface IRoom extends Document {
     // 可使用：1，已刪除：-1
     status: number;
     facilityInfo: IItem[];
+    checkIn: string;
+    checkOut: string;
+    weekdayPrice: number;
+    weekendPrice: number;
 }
 
 const roomSchema = new Schema<IRoom>(
@@ -55,9 +59,21 @@ const roomSchema = new Schema<IRoom>(
                 message: 'maxPeople 格式不正確'
             }
         },
-        price: {
+        checkIn: {
+            type: String,
+            required: [true, 'checkIn 時段未填寫']
+        },
+        checkOut:{
+            type: String,
+            required: [true, 'checkOut 未填寫']
+        },
+        weekdayPrice:{
             type: Number,
-            required: [true, 'price 未填寫']
+            required: [true, '平日價格 未填寫']
+        },
+        weekendPrice:{
+            type: Number,
+            required: [true, '假日價格 未填寫']
         },
         status: {
             type: Number,

@@ -1,6 +1,8 @@
 import type { RequestHandler } from 'express';
 import createHttpError from 'http-errors';
 import OrderModel from '@/models/order';
+import { getTransporter } from '@/controllers/verify';
+import { orderMail } from '@/utils/mailContent';
 
 export const getAllOrderList: RequestHandler = async (_req, res, next) => {
     try {
@@ -55,6 +57,7 @@ export const getOrderById: RequestHandler = async (req, res, next) => {
 export const createOneOrder: RequestHandler = async (req, res, next) => {
     try {
         const { roomId, peopleNum, userInfo, days } = req.body;
+        const roomInfo = (req as any).roomInfo;
 
         const result = await OrderModel.create({
             roomId,
@@ -70,6 +73,15 @@ export const createOneOrder: RequestHandler = async (req, res, next) => {
         res.send({
             status: true,
             result: '成功'
+        });
+
+        const mailContent = await orderMail(roomInfo, userInfo.name, days);
+        const transporter = await getTransporter();
+        await transporter.sendMail({
+            from: process.env.EMAILER_USER,
+            to: userInfo.email,
+            subject: '[Test] The House Room Reservation Confirmation',
+            html: mailContent
         });
     } catch (error) {
         next(error);

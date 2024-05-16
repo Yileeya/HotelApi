@@ -134,7 +134,7 @@ export const checkOrder: RequestHandler = async (req, _res, next) => {
         if (overlappingOrders.length) {
             throw new Error('日期已被預訂');
         }
-
+        (req as any).roomInfo = roomInfo;
         next();
     } catch (error) {
         next(error);
