@@ -10,7 +10,7 @@ router.get(
             schema: {
                 "status": true,
                 "result": [
-                    { $ref: '#/definitions/RoomResponses' }
+                    { $ref: '#/definitions/RoomSimpleResponses' }
                 ]
             }
         }
@@ -21,11 +21,12 @@ router.get(
 
 router.get(
     /**
-     * #swagger.description  = "取得房型詳細資料"
+     * #swagger.description  = "取得房型詳細資料。注意: result 的 facilityInfo 會全部列出，swagger只會列出一筆。"
      * #swagger.responses[200] = {
             schema: {
                 "status": true,
-                "result": { $ref: '#/definitions/RoomResponses' }
+                "bookedDays": { $ref: '#/definitions/RoomBookedDays' },
+                "result": { $ref: '#/definitions/RoomDetailResponses' }
             }
         }
      * #swagger.responses[404] = {

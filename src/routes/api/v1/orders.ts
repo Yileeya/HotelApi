@@ -44,7 +44,7 @@ router.get(
 
 router.post(
     /**
-     * #swagger.description  = "新增訂單"
+     * #swagger.description  = "新增訂單。注意：days為實質入住日期，如：日曆選擇 2024-08-11 ~ 2024-08-13，三天兩夜；那麼輸入的值為 ['2024-08-11', '2024-08-12']。"
      * #swagger.parameters['body'] = {
             in: 'body',
             required: true,
@@ -53,7 +53,7 @@ router.post(
      * #swagger.responses[200] = {
             schema: {
                 "status": true,
-                "result": { $ref: '#/definitions/OrderResponses' },
+                "result": '成功',
             }
         }
      * #swagger.responses[400] = {

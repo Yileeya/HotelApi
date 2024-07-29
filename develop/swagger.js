@@ -82,21 +82,41 @@ const doc = {
             createdAt: '2023-10-29T11:47:45.641Z',
             updatedAt: '2023-10-29T11:47:45.641Z'
         },
+        RoomSimpleResponses: {
+            '_id': '66379dab572d47f89cd1100f',
+            'name': 'Single Room',
+            'imageUrl': 'https://images.unsplash.com/photo-1424847262089-18a6858bd7e2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+        },
+        RoomBookedDays: ['2024-08-20', '2024-08-21', '2024-08-22', '2024-10-23', '2024-10-24'],
+        FacilityInfo: [{ title: 'Mini bar', isProvide: false }, { title: 'Wifi', isProvide: true }, { title: 'AC', isProvide: true }, { title: 'Room Service', isProvide: false }, { title: 'Sofa', isProvide: false }, { title: 'Scenery', isProvide: false }, { title: 'Breakfast', isProvide: true }],
+        RoomDetailResponses: {
+            '_id': '66379dab572d47f89cd1100f',
+            'name': 'Single Room',
+            'description': 'Single Room is only reserved for one guest. There is a bedroom with a single size bed and a private bathroom. Everything you need prepared for you: sheets and blankets, towels, soap and shampoo, hairdryer are provided. In the room there is AC and of course WiFi.',
+            'imageUrlList': [
+                'https://images.unsplash.com/photo-1424847262089-18a6858bd7e2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+            ],
+            'areaInfo': 15,
+            'bedInfo': 'Single',
+            'maxPeople': 1,
+            'checkIn': '15:00 ~ 21:00',
+            'checkOut': '10:00',
+            'weekdayPrice': 1099,
+            'status': 1,
+            'facilityInfo': { $ref: '#/definitions/FacilityInfo' },
+            'weekendPrice': 1300
+        },
         OrderUserInfo: {
-            address: {
-                zipcode: 802,
-                detail: '文山路23號'
-            },
             name: 'Joanne Chen',
             phone: '0912345678',
             email: 'example@gmail.com'
         },
         OrderBody: {
-            roomId: '65251f6095429cd58654bf12',
-            checkInDate: '2023/06/18',
-            checkOutDate: '2023/06/19',
-            peopleNum: 2,
-            userInfo: { $ref: '#/definitions/OrderUserInfo' }
+            roomId: '66379dab572d47f89cd1100f',
+            peopleNum: 1,
+            userInfo: { $ref: '#/definitions/OrderUserInfo' },
+            days: ['2024-08-11', '2024-08-12']
         },
         OrderResponses: {
             userInfo: { $ref: '#/definitions/OrderUserInfo' },
