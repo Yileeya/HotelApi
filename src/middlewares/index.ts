@@ -7,7 +7,7 @@ import OrderModel from '@/models/order';
 import { verifyToken } from '@/utils';
 
 // token 驗證
-export const isAuth: RequestHandler = async (req, _res, next) => {
+export const isAdmin: RequestHandler = async (req, _res, next) => {
     /**
      * #swagger.security = [{ "bearerAuth": [] }]
      * #swagger.responses[403] = {
@@ -33,21 +33,6 @@ export const isAuth: RequestHandler = async (req, _res, next) => {
     } catch (error) {
         next(error);
     }
-};
-
-// TODO:實作管理員權限
-export const isAdmin: RequestHandler = async (req, res, next) => {
-    /**
-     * #swagger.security = [{ "bearerAuth": [] }]
-     * #swagger.responses[403] = {
-            description: '重新登入',
-            schema: {
-                "status": false,
-                "message": "請重新登入",
-            }
-        }
-     */
-    isAuth(req, res, next);
 };
 
 export const checkRequestBodyValidator: RequestHandler = (req, _res, next) => {

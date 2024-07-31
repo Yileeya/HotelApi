@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as UserController from '@/controllers/user';
-import { checkRequestBodyValidator, isAuth } from '@/middlewares';
+import { checkRequestBodyValidator } from '@/middlewares';
 
 const router = Router();
 
@@ -129,7 +129,7 @@ router.get(
         }
      */
     '/check',
-    isAuth,
+    // isAuth,
     UserController.check
 );
 
@@ -160,7 +160,7 @@ router.get(
         }
      */
     '/',
-    isAuth,
+    // isAuth,
     UserController.getInfo
 );
 
@@ -197,7 +197,7 @@ router.put(
         }
      */
     '/',
-    isAuth,
+    // isAuth,
     UserController.updateInfo
 );
 
