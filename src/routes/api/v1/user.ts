@@ -23,20 +23,12 @@ router.post(
                 "status": true,
                 "token": "eyJhbGciOiJI....",
                 "result": {
-                    "address": {
-                        "zipcode": 802,
-                        "detail": "文山路23號",
-                        "city": "高雄市",
-                        "county": "苓雅區"
-                    },
-                    "_id": "6533f0ef4cdf5b7f762747b0",
-                    "name": "Lori Murphy",
-                    "email": "timmothy.ramos@example.com",
-                    "phone": "(663) 742-3828",
-                    "birthday": "1982-02-03T16:00:00.000Z",
-                    "createdAt": "2023-10-21T15:40:31.526Z",
-                    "updatedAt": "2023-10-21T15:40:31.526Z",
-                    "id": "6533f0ef4cdf5b7f762747b0"
+                    "name": "Admin",
+                    "email": "admin@gmail.com",
+                    "verificationToken": "",
+                    "_id": "66aa49a6b8be7260049b9e58",
+                    "createdAt": "2024-07-31T14:26:46.452Z",
+                    "updatedAt": "2024-07-31T14:26:46.452Z"
                 }
             }
         }
@@ -68,12 +60,6 @@ router.post(
                 name: "Lori Murphy",
                 email: "lori.murphy@example.com",
                 password: "密碼",
-                phone: "(663) 742-3828",
-                birthday: "1982/2/4",
-                address: {
-                    zipcode: 802,
-                    detail: "文山路23號",
-                },
             }
         }
      * #swagger.responses[200] = {
@@ -82,17 +68,9 @@ router.post(
                 "status": true,
                 "token": "eyJhbGciOiJI....",
                 "result": {
-                    "address": {
-                        "zipcode": 802,
-                        "detail": "文山路23號",
-                        "city": "高雄市",
-                        "county": "苓雅區"
-                    },
                     "_id": "6533f0ef4cdf5b7f762747b0",
                     "name": "Lori Murphy",
                     "email": "timmothy.ramos@example.com",
-                    "phone": "(663) 742-3828",
-                    "birthday": "1982-02-03T16:00:00.000Z",
                     "createdAt": "2023-10-21T15:40:31.526Z",
                     "updatedAt": "2023-10-21T15:40:31.526Z",
                     "id": "6533f0ef4cdf5b7f762747b0"
