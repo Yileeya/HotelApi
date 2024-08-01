@@ -120,15 +120,16 @@ const doc = {
         },
         OrderResponses: {
             userInfo: { $ref: '#/definitions/OrderUserInfo' },
-            _id: '653e335a13831c2ac8c389bb',
-            roomId: { $ref: '#/definitions/RoomResponses' },
-            checkInDate: '2023-06-17T16:00:00.000Z',
-            checkOutDate: '2023-06-18T16:00:00.000Z',
-            peopleNum: 2,
-            orderUserId: '6533f0ef4cdf5b7f762747b0',
-            status: 0,
-            createdAt: '2023-10-29T10:26:34.498Z',
-            updatedAt: '2023-10-29T10:26:34.498Z'
+            "_id": "6646062cc380e8a8cb14ebb0",
+            "roomId": "66379dab572d47f89cd1100f",
+            "days": [
+                "2024-07-22",
+                "2024-07-23",
+                "2024-07-24"
+            ],
+            "peopleNum": 1,
+            "createdAt": "2024-05-16T13:12:12.640Z",
+            "updatedAt": "2024-05-16T13:12:12.640Z"
         }
     }
 };

@@ -6,7 +6,8 @@ const router = Router();
 
 router.get(
     /**
-     * #swagger.description  = "取得所有訂單列表"
+     * #swagger.description  = "取得所有訂單列表。
+     * start: 2024-07-20，end: 2024-07-31，user: 用戶名、電話或電子郵件的關鍵字進行模糊搜尋。"
      * #swagger.responses[200] = {
             schema: {
                 "status": true,

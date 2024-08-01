@@ -5,10 +5,25 @@ import { getTransporter } from '@/controllers/verify';
 import { orderMail } from '@/utils/mailContent';
 
 export const getAllOrderList: RequestHandler = async (_req, res, next) => {
+    const { start, end, user } = _req.query;
     try {
-        const result = await OrderModel.find().populate({
-            path: 'roomId'
-        });
+        // days 篩選
+        const dayQuery: { $gte?: string; $lte?: string } = {};
+        if (start) dayQuery.$gte = start as string;
+        if (end) dayQuery.$lte = end as string;
+        const dayFilter = Object.keys(dayQuery).length > 0 ? { days: { $elemMatch: dayQuery } } : {};
+
+        // user 關鍵字模糊搜尋
+        const userSearch = user ? {
+            $or: [
+                { 'userInfo.name': { $regex: user, $options: 'i' } },
+                { 'userInfo.phone': { $regex: user, $options: 'i' } },
+                { 'userInfo.email': { $regex: user, $options: 'i' } }
+            ]
+        } : {};
+
+        const query = { ...dayFilter, ...userSearch };
+        const result = await OrderModel.find(query);
 
         res.send({
             status: true,
