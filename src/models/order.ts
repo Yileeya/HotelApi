@@ -10,6 +10,8 @@ export interface IOrder extends Document {
         phone: string;
         email: string;
     };
+    checkinTime?: Date;
+    checkoutTime?: Date;
 }
 
 const orderSchema = new Schema<IOrder>(
@@ -49,6 +51,12 @@ const orderSchema = new Schema<IOrder>(
                 }
             }, { _id: false }),
             required: [true, 'userInfo 未填寫']
+        },
+        checkinTime: {
+            type: Date
+        },
+        checkoutTime: {
+            type: Date
         }
     },
     {

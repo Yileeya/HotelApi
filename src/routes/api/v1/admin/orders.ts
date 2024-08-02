@@ -73,4 +73,24 @@ router.delete(
     OrderController.deleteOrderByAdmin
 );
 
+router.patch(
+    /**
+     * #swagger.description  = "訂單 Checkin / Checkout。api 路由為 /checkin/:id 或是 /checkout/:id"
+     * #swagger.responses[200] = {
+            schema: {
+                "status": true,
+                "result": "Checkin 成功",
+            }
+        }
+     * #swagger.responses[404] = {
+            schema: {
+                "status": false,
+                "message": "此訂單不存在",
+            }
+        }
+     */
+    '/:action/:id',
+    OrderController.updateOrderCheckInAndOut
+);
+
 export default router;

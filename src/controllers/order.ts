@@ -196,3 +196,41 @@ export const deleteOrderByAdmin: RequestHandler = async (req, res, next) => {
         next(error);
     }
 };
+
+export const updateOrderCheckInAndOut: RequestHandler = async (req, res, next) => {
+    type ActionType = 'checkin' | 'checkout';
+    const { action, id } = req.params;
+
+    const actionType = action as ActionType;
+    let updateField = {};
+
+    if (actionType === 'checkin') {
+        updateField = { checkinTime: new Date() };
+    } else if (actionType === 'checkout') {
+        updateField = { checkoutTime: new Date() };
+    } else {
+        throw createHttpError(404, 'api 錯誤');
+    }
+
+    try {
+        const result = await OrderModel.findOneAndUpdate(
+            {
+                _id: id
+            },
+            updateField,
+            {
+                new: true
+            }
+        );
+        if (!result) {
+            throw createHttpError(404, '此訂單不存在');
+        }
+
+        res.send({
+            status: true,
+            result: `${actionType} 成功！`
+        });
+    } catch (error) {
+        next(error);
+    }
+};
