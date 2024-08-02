@@ -17,6 +17,7 @@ export interface IRoom extends Document {
     checkOut: string;
     weekdayPrice: number;
     weekendPrice: number;
+    sort?: number;
 }
 
 const roomSchema = new Schema<IRoom>(
@@ -63,15 +64,15 @@ const roomSchema = new Schema<IRoom>(
             type: String,
             required: [true, 'checkIn 時段未填寫']
         },
-        checkOut:{
+        checkOut: {
             type: String,
             required: [true, 'checkOut 未填寫']
         },
-        weekdayPrice:{
+        weekdayPrice: {
             type: Number,
             required: [true, '平日價格 未填寫']
         },
-        weekendPrice:{
+        weekendPrice: {
             type: Number,
             required: [true, '假日價格 未填寫']
         },
@@ -82,6 +83,10 @@ const roomSchema = new Schema<IRoom>(
         facilityInfo: {
             type: [itemSchema],
             default: []
+        },
+        sort: {
+            type: Number,
+            default: 99
         }
     },
     {

@@ -1,12 +1,13 @@
 import type { RequestHandler } from 'express';
 import createHttpError from 'http-errors';
 import RoomModel from '@/models/room';
-import OrderModel from '@/models/order'
+import OrderModel from '@/models/order';
 
 export const getRoomList: RequestHandler = async (_req, res, next) => {
     try {
         const result = await RoomModel.find({ status: 1 })
             .select('_id name imageUrlList')
+            .sort({ sort: 1 })  // 按照 sortOrder 升序排序
             .then(rooms => {
                 return rooms.map(room => {
                     return {
