@@ -55,11 +55,11 @@ router.put(
 
 router.delete(
     /**
-     * #swagger.description  = "取消訂單"
+     * #swagger.description  = "刪除訂單"
      * #swagger.responses[200] = {
             schema: {
                 "status": true,
-                "result": { $ref: '#/definitions/OrderResponses' },
+                "result": "已刪除訂單",
             }
         }
      * #swagger.responses[404] = {
