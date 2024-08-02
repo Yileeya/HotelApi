@@ -225,3 +225,21 @@ export const updateOrderCheckInAndOut: RequestHandler = async (req, res, next) =
         next(error);
     }
 };
+
+export const deleteMultipleOrdersByAdmin: RequestHandler = async (req, res, next) => {
+    try {
+        const { ids } = req.body;
+        if (!Array.isArray(ids) || ids.length === 0) {
+            throw createHttpError(400, 'ids 格式錯誤');
+        }
+        const result = await OrderModel.deleteMany(
+            { _id: { $in: ids } }
+        );
+        res.send({
+            status: true,
+            result: `已刪除 ${result?.deletedCount} 筆資料。`
+        });
+    } catch (error) {
+        next(error);
+    }
+};

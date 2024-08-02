@@ -93,4 +93,29 @@ router.patch(
     OrderController.updateOrderCheckInAndOut
 );
 
+router.post(
+    /**
+     * #swagger.description  = "多筆刪除。"
+     * #swagger.parameters['body'] = {
+            in: 'body',
+            required: true,
+            schema: { "ids": ["66ad014976411a1aa098b97a", "66ad00fd76411a1aa098b979"] },
+        }
+     * #swagger.responses[200] = {
+            schema: {
+                "status": true,
+                "result": '已刪除 2 筆資料。',
+            }
+        }
+     * #swagger.responses[400] = {
+            schema: {
+                "status": false,
+                "message": "ids 格式錯誤",
+            }
+        }
+     */
+    '/deleteMultiple',
+    OrderController.deleteMultipleOrdersByAdmin
+);
+
 export default router;
